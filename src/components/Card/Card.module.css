@@ -1,0 +1,13 @@
+.main {
+  width: 300px;
+  /* background-color: beige; */
+}
+.main.blue {
+  background-color: blue;
+}
+.main.red {
+  background-color: red;
+}
+.image {
+  width: 300px;
+}
