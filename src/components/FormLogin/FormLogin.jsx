@@ -78,7 +78,7 @@ class FormLogin extends Component {
             I agree
           </label>
         </div>
-        <div class="form-check">
+        <div className="form-check">
           <input
             className="form-check-input"
             type="radio"
