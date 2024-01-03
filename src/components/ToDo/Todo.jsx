@@ -14,6 +14,7 @@ const ToDo = ({ todo, handleCheckCompleted, handleDelete }) => {
         <div className="col">
           <button
             type="button"
+            disabled={!todo.completed}
             className="btn-close"
             aria-label="Close"
             onClick={() => handleDelete(todo.id)}

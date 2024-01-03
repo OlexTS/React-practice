@@ -7,6 +7,15 @@ class FormLogin extends Component {
     isChecked: false,
     gender: "male",
   };
+  // componentDidMount() {
+  //   console.log("This is mount");
+  // }
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log("This is update");
+  // }
+  // componentWillUnmount() {
+  //   console.log("This is unmount");
+  // }
   handleChange = ({ target }) => {
     this.setState({ [target.name]: target.value });
   };
@@ -34,6 +43,7 @@ class FormLogin extends Component {
     this.setState({ gender: value });
   };
   render() {
+    // console.log("This is render");
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="mb-3">
