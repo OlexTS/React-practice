@@ -3,13 +3,16 @@ import { Component } from "react";
 // import { Card } from './Card/Card'
 import { Header } from "./Header/Header";
 // import Counter from "./Counter/Counter";
-import Modal from "./Modal/Modal";
-import ToDoList from "./ToDoList/TodoList";
-import FormLogin from "./FormLogin/FormLogin";
+// import Modal from "./Modal/Modal";
+// import ToDoList from "./ToDoList/TodoList";
+// import FormLogin from "./FormLogin/FormLogin";
+import Search from "./Search/Search";
+import ContentInfo from "./ContentInfo/ContentInfo";
 
 class App extends Component {
   state = {
     isOpenModal: false,
+    searchText: ''
   };
 
  
@@ -26,13 +29,18 @@ class App extends Component {
     };
     console.log(newUser);
   };
+  handleSearch = (searchText) => {
+    this.setState({searchText})
+  }
 
   render() {
     return (
       <div className="container">
         <Header showModal={this.showModal} />
+        <Search handleSearch={this.handleSearch} />
+        <ContentInfo searchText={this.state.searchText} />
         {/* <Counter /> */}
-        <ToDoList />
+        {/* <ToDoList />
         {this.state.isOpenModal && (
           <Modal closeModal={this.closeModal}>
             <FormLogin
@@ -40,7 +48,7 @@ class App extends Component {
               closeModal={this.closeModal}
             />
           </Modal>
-        )}
+        )} */}
       </div>
     );
   }

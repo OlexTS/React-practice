@@ -1,6 +1,6 @@
 import { Component } from "react";
 import ToDo from "../ToDo/Todo";
-import todo from "../../todo.json";
+// import todo from "../../todo.json";
 import FormToDo from "../FormToDo/FormToDo";
 import { nanoid } from "nanoid";
 
