@@ -6,12 +6,12 @@ import Loader from "../Loader/Loader";
 import ContentNews from "../ContentNews/ContentNews";
 
 const STATUS = {
-  IDLE: 'idle',
-  PENDING: 'pending',
-  RESOLVED: 'resolved',
-  REJECTED: 'rejected'
-}
-
+  IDLE: "idle",
+  PENDING: "pending",
+  RESOLVED: "resolved",
+  REJECTED: "rejected",
+};
+let page = 1;
 class ContentInfo extends Component {
   state = {
     news: null,
@@ -35,12 +35,26 @@ class ContentInfo extends Component {
       }, 1000);
     }
   }
+
+  onLoadMore = () => {
+    page += 1;
+    this.setState({ status: STATUS.PENDING });
+
+    return getNews(this.props.searchText, page)
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState((prevState) => ({
+          news: [...prevState.news, ...data.articles],
+          status: STATUS.RESOLVED,
+        }));
+      });
+  };
   render() {
     const { news, error, status } = this.state;
     if (status === STATUS.PENDING) {
-      return <Loader/>
+      return <Loader />;
     } else if (status === STATUS.RESOLVED) {
-      return <ContentNews news={news} />
+      return <ContentNews news={news} onLoadMore={this.onLoadMore} />;
     } else if (status === STATUS.REJECTED) {
       return <ErrorMessage>{error}</ErrorMessage>;
     }
