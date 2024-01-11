@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 import { Header } from "./Header/Header";
 // import Counter from "./Counter/Counter";
 import Modal from "./Modal/Modal";
-// import ToDoList from "./ToDoList/TodoList";
+import ToDoList from "./ToDoList/TodoList";
 import FormLogin from "./FormLogin/FormLogin";
 import Search from "./Search/Search";
 import ContentInfo from "./ContentInfo/ContentInfo";
@@ -12,7 +12,7 @@ import ContentInfo from "./ContentInfo/ContentInfo";
 const App = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [searchText, setSearchText] = useState("");
-  
+
   const showModal = () => setIsOpenModal(true);
 
   const closeModal = () => setIsOpenModal(false);
@@ -32,7 +32,7 @@ const App = () => {
       <Search handleSearch={handleSearch} />
       <ContentInfo searchText={searchText} />
       {/* <Counter /> */}
-      {/* <ToDoList /> */}
+      <ToDoList />
       {isOpenModal && (
         <Modal closeModal={closeModal}>
           <FormLogin createUser={createUser} closeModal={closeModal} />

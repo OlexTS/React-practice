@@ -3,7 +3,7 @@ import { useEffect } from "react";
 const Modal = ({ closeModal, children }) => {
   useEffect(() => {
     function handlePressEsc(e) {
-      console.log(Date.now);
+      //   console.log(Date.now);
       if (e.code === "Escape") {
         closeModal();
       }
