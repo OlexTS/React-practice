@@ -1,48 +1,42 @@
-import { Component } from "react";
+import { useState } from "react";
 
-class FormToDo extends Component {
-  state = {
-      todo: "",
-      
-  };
+const FormToDo = ({ addTodo }) => {
+  const [todo, setTodo] = useState("");
 
-    
-  handleChange = ({ target }) => {
-    this.setState({ [target.name]: target.value });
+  const handleChange = ({ target }) => {
+    setTodo(target.value);
   };
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     //   this.props.createUser(this.state)
 
-    if (!this.state.todo) {
+    if (!todo) {
       return alert("Please enter a valid value");
     }
-    this.props.addTodo(this.state.todo);
-    this.setState({
-      todo: "",
-    });
+    addTodo(todo);
+    setTodo("");
   };
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Create todo
-          </label>
-          <input
-            name="todo"
-            type="text"
-            className="form-control"
-            id="exampleInputEmail1"
-            onChange={this.handleChange}
-            value={this.state.todo}
-          />
-        </div>
-        <button type="submit" className="btn btn-primary">
-          Add todo
-        </button>
-      </form>
-    );
-  }
-}
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="mb-3">
+        <label htmlFor="exampleInputEmail1" className="form-label">
+          Create todo
+        </label>
+        <input
+          name="todo"
+          type="text"
+          className="form-control"
+          id="exampleInputEmail1"
+          onChange={handleChange}
+          value={todo}
+        />
+      </div>
+      <button type="submit" className="btn btn-primary">
+        Add todo
+      </button>
+    </form>
+  );
+};
+
 export default FormToDo;
