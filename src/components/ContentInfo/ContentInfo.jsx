@@ -5,6 +5,11 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Loader from "../Loader/Loader";
 import ContentNews from "../ContentNews/ContentNews";
 
+/*
+  |==============================
+  | STATE MACHINE
+  |==============================
+*/
 // const STATUS = {
 //   IDLE: "idle",
 //   PENDING: "pending",
@@ -60,6 +65,8 @@ import ContentNews from "../ContentNews/ContentNews";
 //     }
 //   }
 // }
+
+
 let page = 1
 class ContentInfo extends Component {
   state = {

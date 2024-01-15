@@ -1,13 +1,13 @@
 import { useState } from "react";
 
 const Search = ({ handleSearch }) => {
-  const { value, setValue } = useState("");
+  const [ value, setValue ] = useState("");
   const handleChange = ({ target: { value } }) => {
     setValue(value);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    this.props.handleSearch(this.state.value);
+   handleSearch(value);
   };
 
   return (

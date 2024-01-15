@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 // import { Card } from './Card/Card'
 import { Header } from "./Header/Header";
-import Counter from "./Counter/Counter";
+// import Counter from "./Counter/Counter";
 import Modal from "./Modal/Modal";
-// import ToDoList from "./ToDoList/TodoList";
+import ToDoList from "./ToDoList/TodoList";
 import FormLogin from "./FormLogin/FormLogin";
 import Search from "./Search/Search";
 import ContentInfo from "./ContentInfo/ContentInfo";
@@ -31,13 +33,14 @@ const App = () => {
       <Header showModal={showModal} />
       <Search handleSearch={handleSearch} />
       <ContentInfo searchText={searchText} />
-      <Counter />
-      {/* <ToDoList /> */}
+      {/* <Counter /> */}
+      <ToDoList />
       {isOpenModal && (
         <Modal closeModal={closeModal}>
           <FormLogin createUser={createUser} closeModal={closeModal} />
         </Modal>
       )}
+      <ToastContainer position="top-right" autoClose={2000} />
     </div>
   );
 };
