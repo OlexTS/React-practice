@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useEffect, useState } from "react";
 import { getNews } from "../../services/getNews";
 
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
@@ -66,57 +66,118 @@ import ContentNews from "../ContentNews/ContentNews";
 //   }
 // }
 
+/*
+  |==============================
+  | COMPONENT ON HOOKS
+  |==============================
+*/
 
-let page = 1
-class ContentInfo extends Component {
-  state = {
-    news: null,
-    isLoading: false,
-    error: ''
-  };
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.searchText !== this.props.searchText) {
-      this.setState({ isLoading: true });
+let page = 1;
+const ContentInfo = ({ searchText }) => {
+  const [news, setNews] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (searchText) {
+      setIsLoading(true);
+      setNews(null);
+      setError('')
       setTimeout(() => {
-        getNews(this.props.searchText)
+        getNews(searchText)
           .then((response) => response.json())
           .then((data) => {
-            if (data.status === 'ok') {
-              this.setState({ news: data.articles })
+            if (data.status === "ok") {
+              setNews(data.articles);
+            } else {
+              return Promise.reject(data.message);
             }
-            else { return Promise.reject(data.message) }
-          }).catch(error=>this.setState({error}))
-          .finally(this.setState(() => ({ isLoading: false })));
+          })
+          .catch((error) => setError(error))
+          .finally(setIsLoading(false));
       }, 3000);
     }
-  }
-    onLoadMore = () => {
-    page += 1;
-    this.setState({ isLoading: true });
+  }, [searchText]);
 
-    return getNews(this.props.searchText, page)
+  const onLoadMore = () => {
+    page += 1;
+    setIsLoading(true);
+
+    return getNews(searchText, page)
       .then((response) => response.json())
       .then((data) => {
-        this.setState((prevState) => ({
-          news: [...prevState.news, ...data.articles],
-          isLoading:false,
-        }));
-      }).catch(error=>this.setState({error: true}));
+        setNews((prevState) => [...prevState.news, ...data.articles]);
+        setIsLoading(false);
+      })
+      .catch((error) => setError(true));
   };
-  render() {
-    const { news, isLoading, error } = this.state;
 
-    return (
-      <>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
-        {isLoading && <Loader/>}
-        
-          {news &&
-            <ContentNews news={ news} onLoadMore={this.onLoadMore} />}
-       
-      </>
-    );
-  }
-}
+  return (
+    <>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
+      {isLoading && <Loader />}
+
+      {news && <ContentNews news={news} onLoadMore={onLoadMore} />}
+    </>
+  );
+};
+
+/*
+  |==============================
+  | COMPONENT ON CLASSES
+  |==============================
+*/
+
+// let page = 1
+// class ContentInfo extends Component {
+//   state = {
+//     news: null,
+//     isLoading: false,
+//     error: ''
+//   };
+//   componentDidUpdate(prevProps, prevState) {
+//     if (prevProps.searchText !== this.props.searchText) {
+//       this.setState({ isLoading: true });
+//       setTimeout(() => {
+//         getNews(this.props.searchText)
+//           .then((response) => response.json())
+//           .then((data) => {
+//             if (data.status === 'ok') {
+//               this.setState({ news: data.articles })
+//             }
+//             else { return Promise.reject(data.message) }
+//           }).catch(error=>this.setState({error}))
+//           .finally(this.setState(() => ({ isLoading: false })));
+//       }, 3000);
+//     }
+//   }
+//     onLoadMore = () => {
+//     page += 1;
+//     this.setState({ isLoading: true });
+
+//     return getNews(this.props.searchText, page)
+//       .then((response) => response.json())
+//       .then((data) => {
+//         this.setState((prevState) => ({
+//           news: [...prevState.news, ...data.articles],
+//           isLoading:false,
+//         }));
+//       }).catch(error=>this.setState({error: true}));
+//   };
+//   render() {
+//     const { news, isLoading, error } = this.state;
+
+//     return (
+//       <>
+//         {error && <ErrorMessage>{error}</ErrorMessage>}
+//         {isLoading && <Loader/>}
+
+//           {news &&
+//             <ContentNews news={ news} onLoadMore={this.onLoadMore} />}
+
+//       </>
+//     );
+//   }
+// }
 
 export default ContentInfo;
