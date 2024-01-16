@@ -1,14 +1,27 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
+
+const reducer = (prevState, action) => {
+  if (action.type === 'increment') {
+    return prevState+action.payload
+  }
+  else {
+    return prevState-action.payload
+  }
+}
 
 const Counter = () => {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
+  const [count, setCount] = useReducer(reducer,0);
 
-  const handleIncrement = () => {
-    setCount((prevCount) => prevCount + 1);
-  };
-  const handleDecrement = () => {
-    setCount((prevCount) => prevCount - 1);
-  };
+const handleIncrement = () => setCount({type: 'increment', payload: 1})
+  const handleDecrement = () => setCount({type: 'decrement', payload: 1})
+
+  // const handleIncrement = () => {
+  //   setCount((prevCount) => prevCount + 1);
+  // };
+  // const handleDecrement = () => {
+  //   setCount((prevCount) => prevCount - 1);
+  // };
 
   return (
     <div className="position-absolute top-50 start-50 translate-middle">

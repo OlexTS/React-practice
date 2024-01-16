@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 // import { Card } from './Card/Card'
 import { Header } from "./Header/Header";
-// import Counter from "./Counter/Counter";
+import Counter from "./Counter/Counter";
 import Modal from "./Modal/Modal";
 // import ToDoList from "./ToDoList/TodoList";
 import FormLogin from "./FormLogin/FormLogin";
@@ -33,7 +33,7 @@ const App = () => {
       <Header showModal={showModal} />
       <Search handleSearch={handleSearch} />
       <ContentInfo searchText={searchText} />
-      {/* <Counter /> */}
+      <Counter />
       {/* <ToDoList /> */}
       {isOpenModal && (
         <Modal closeModal={closeModal}>
