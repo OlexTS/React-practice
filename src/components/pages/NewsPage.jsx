@@ -2,7 +2,7 @@ import React from 'react'
 
 const NewsPage = () => {
   return (
-    <div>HomePage</div>
+    <div>NewsPage</div>
   )
 }
 

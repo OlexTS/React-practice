@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import NewsPage from "./pages/NewsPage";
 import TodoPage from "./pages/TodoPage";
+import Layout from "./Layout/Layout";
 // import { useState } from "react";
 // import { nanoid } from "nanoid";
 // import { ToastContainer } from "react-toastify";
@@ -16,17 +17,16 @@ import TodoPage from "./pages/TodoPage";
 // import ContentInfo from "./ContentInfo/ContentInfo";
 // import TestUseMemo from "./TestUseMemo/TestUseMemo";
 
-
 const App = () => {
-  
   return (
     <Routes>
-      <Route path="/" element={<HomePage/>}/>
-      <Route path="/news" element={<NewsPage/>}/>
-      <Route path="/todo" element={<TodoPage/>}/>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path="news" element={<NewsPage />} />
+        <Route path="todo" element={<TodoPage />} />
+      </Route>
     </Routes>
   );
 };
-
 
 export default App;
