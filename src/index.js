@@ -10,7 +10,7 @@ import Context from "./testContext/Context/Context";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="react-practice">
       <Context>
         <App />
       </Context>
