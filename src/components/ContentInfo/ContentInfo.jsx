@@ -72,54 +72,70 @@ import ContentNews from "../ContentNews/ContentNews";
   |==============================
 */
 
+const STATUS = {
+  IDLE: "idle",
+  PENDING: "pending",
+  REJECTED: "rejected",
+  RESOLVED: "resolved",
+};
 let page = 1;
 const ContentInfo = ({ searchText }) => {
   const [news, setNews] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [status, setStatus] = useState(STATUS.IDLE);
 
   useEffect(() => {
     if (searchText) {
-      setIsLoading(true);
-      setNews(null);
-      setError('')
+      setStatus(STATUS.PENDING);
+      
       setTimeout(() => {
         getNews(searchText)
           .then((response) => response.json())
           .then((data) => {
             if (data.status === "ok") {
               setNews(data.articles);
+              setStatus(STATUS.RESOLVED);
             } else {
               return Promise.reject(data.message);
             }
           })
-          .catch((error) => setError(error))
-          .finally(setIsLoading(false));
+          .catch((error) => {
+            setError(error);
+            setStatus(STATUS.REJECTED);
+          });
+        
       }, 3000);
     }
   }, [searchText]);
 
-  const onLoadMore = () => {
+  const onLoadMore = (e) => {
+    e.preventDefault()
     page += 1;
-    setIsLoading(true);
+    setStatus(STATUS.PENDING);
 
     return getNews(searchText, page)
       .then((response) => response.json())
       .then((data) => {
-        setNews((prevState) => [...prevState.news, ...data.articles]);
-        setIsLoading(false);
+        setNews(() => [...news, ...data.articles]);
+        setStatus(STATUS.RESOLVED);
       })
-      .catch((error) => setError(true));
+      .catch((error) => {
+        setError(error);
+        setStatus(STATUS.REJECTED);
+      });
   };
 
-  return (
-    <>
-      {error && <ErrorMessage>{error}</ErrorMessage>}
-      {isLoading && <Loader />}
-
-      {news && <ContentNews news={news} onLoadMore={onLoadMore} />}
-    </>
-  );
+  if (status === STATUS.PENDING) {
+    return (
+    
+        <Loader />
+      
+    );
+  } else if (status === STATUS.RESOLVED) {
+    return <ContentNews news={news} onLoadMore={onLoadMore} />;
+  } else if (status === STATUS.REJECTED) {
+    return <ErrorMessage>{error}</ErrorMessage>;
+  }
 };
 
 /*
