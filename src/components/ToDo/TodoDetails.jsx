@@ -1,0 +1,26 @@
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import ToDo from "./Todo";
+
+const TodoDetails = () => {
+  const params = useParams();
+
+  const [todoList, setTodoList] = useState(null);
+
+  useEffect(() => {
+    const localTodo = localStorage.getItem("todo");
+    if (localTodo) {
+      setTodoList(JSON.parse(localTodo));
+    }
+  }, []);
+
+  return (
+    <>
+      {todoList?.map(
+        (todo) => todo.id === params.id && <ToDo key={todo.id} todo={todo} />
+      )}
+    </>
+  );
+};
+
+export default TodoDetails;

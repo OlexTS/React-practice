@@ -7,7 +7,7 @@ export const useCustomContext = () => {
 };
 const Context = ({ children }) => {
   const [toggleAlert, setToggleAlert] = useState(false);
-  const [news, setNews] = useState([]);
+  const [news, setNews] = useState(null);
 
   return (
     <ContextAlert.Provider

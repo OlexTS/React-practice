@@ -4,6 +4,7 @@ import { getNews } from "../../services/getNews";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Loader from "../Loader/Loader";
 import ContentNews from "../ContentNews/ContentNews";
+import { useCustomContext } from "../../testContext/Context/Context";
 
 /*
   |==============================
@@ -80,9 +81,13 @@ const STATUS = {
 };
 let page = 1;
 const ContentInfo = ({ searchText }) => {
-  const [news, setNews] = useState(null);
+  const {news, setNews} = useCustomContext();
   const [error, setError] = useState("");
   const [status, setStatus] = useState(STATUS.IDLE);
+
+  useEffect(() => {
+  news&&setStatus(STATUS.RESOLVED)
+},[news])
 
   useEffect(() => {
     if (searchText) {
@@ -106,7 +111,7 @@ const ContentInfo = ({ searchText }) => {
         
       }, 3000);
     }
-  }, [searchText]);
+  }, [searchText, setNews]);
 
   const onLoadMore = (e) => {
     e.preventDefault()
