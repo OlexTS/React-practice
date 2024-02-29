@@ -116,7 +116,7 @@ const ContentInfo = ({ searchText }) => {
   const onLoadMore = (e) => {
     e.preventDefault()
     page += 1;
-    setStatus(STATUS.PENDING);
+    // setStatus(STATUS.PENDING);
 
     return getNews(searchText, page)
       .then((response) => response.json())
