@@ -1,9 +1,11 @@
 import { Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import HomePage from "./pages/HomePage";
-import NewsPage from "./pages/NewsPage";
-import TodoPage from "./pages/TodoPage";
+// import NewsPage from "./pages/NewsPage";
+// import TodoPage from "./pages/TodoPage";
 import Layout from "./Layout/Layout";
-import TodoDetails from "./ToDo/TodoDetails";
+// import LoginPage from "./pages/LoginPage";
+// import TodoDetails from "./ToDo/TodoDetails";
 // import { useState } from "react";
 // import { nanoid } from "nanoid";
 // import { ToastContainer } from "react-toastify";
@@ -18,6 +20,11 @@ import TodoDetails from "./ToDo/TodoDetails";
 // import ContentInfo from "./ContentInfo/ContentInfo";
 // import TestUseMemo from "./TestUseMemo/TestUseMemo";
 
+const TodoDetails = lazy(() => import("./ToDo/TodoDetails"));
+const TodoPage = lazy(() => import("./pages/TodoPage"));
+const NewsPage = lazy(() => import("./pages/NewsPage"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
+
 const App = () => {
   return (
     <Routes>
@@ -27,6 +34,14 @@ const App = () => {
         <Route path="todo" element={<TodoPage />} />
         <Route path="todo/:id" element={<TodoDetails />} />
       </Route>
+      <Route
+        path="/login"
+        element={
+          <Suspense>
+            <LoginPage />
+          </Suspense>
+        }
+      />
     </Routes>
   );
 };

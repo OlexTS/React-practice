@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { nanoid } from "nanoid";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -8,7 +8,6 @@ import FormLogin from "../FormLogin/FormLogin";
 
 const Layout = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
- 
 
   const showModal = () => setIsOpenModal(true);
 
@@ -24,12 +23,14 @@ const Layout = () => {
   return (
     <div className="container">
       <ToastContainer position="top-right" autoClose={2000} />
-      <Header showModal={showModal}/>
-      <Outlet />
+      <Header showModal={showModal} />
+      <Suspense>
+        <Outlet />
+      </Suspense>
       {isOpenModal && (
         <Modal closeModal={closeModal}>
           <FormLogin createUser={createUser} closeModal={closeModal} />
-        </Modal >
+        </Modal>
       )}
     </div>
   );
