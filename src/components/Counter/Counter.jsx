@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
+import { decrement, increment } from "../../redux/counter/actions";
 
 const Counter = () => {
  
-  const { total, step } = useSelector(state => state);
+  const { total, step } = useSelector(state => state.counter);
   const dispatch = useDispatch()
 
-const handleIncrement = () => dispatch({type: 'increment', payload:step})
-  const handleDecrement = () => dispatch({type: 'decrement', payload: step})
+const handleIncrement = () => dispatch(increment(step))
+  const handleDecrement = () => dispatch(decrement(step))
 
   
   return (

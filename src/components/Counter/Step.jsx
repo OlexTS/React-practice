@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from "react-redux"
+import { setStep } from "../../redux/counter/actions"
 
 const Step = () => {
     const dispatch = useDispatch()
-	const {step} = useSelector(state=>state)
+	const {step} = useSelector(state=>state.counter)
 
     const handleSubmit = (e) => {
 		e.preventDefault()
 		const { value } = e.target.elements.step
-        dispatch({ type: 'setStep', payload: Number(value)})
+        dispatch(setStep(Number(value)))
 	}
 
 	return (
