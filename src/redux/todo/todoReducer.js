@@ -3,10 +3,10 @@ import { todoInitialState } from "./initialState";
 import { createTodo } from "./actions";
 // import { CREATETODO } from "./types";
 
-export const todoReducer = createReducer(todoInitialState.todo, {
-  [createTodo]: (state, action) => {
-    state.todo.push(action.payload);
-  },
+export const todoReducer = createReducer(todoInitialState, (builder) => {
+  builder.addCase(createTodo, (state, action) => {
+   state.todo.push(action.payload)
+  });
 });
 // export const todoReducer = (state = todoInitialState, action) => {
 //   switch (action.type) {

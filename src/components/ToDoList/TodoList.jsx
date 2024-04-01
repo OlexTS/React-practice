@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import ToDo from "../ToDo/Todo";
 // import todo from "../../todo.json";
 import FormToDo from "../FormToDo/FormToDo";
-import FormFilterToDo from '../FormToDo/FormFilterToDo'
+import FormFilterToDo from "../FormToDo/FormFilterToDo";
 import { createTodo } from "../../redux/todo/actions";
 
 /*
@@ -17,14 +17,13 @@ import { createTodo } from "../../redux/todo/actions";
 
 const ToDoList = () => {
   // const [todoList, setTodoList] = useState("");
-  const {todo:todoList}=useSelector(state=>state.todo)
-  const dispatch = useDispatch()
-  const [filteredTodoList, setFilteredTodoList] = useState(null);
+  const { todo: todoList } = useSelector((state) => state.todo);
+  const dispatch = useDispatch();
+  const [filteredTodoList, setFilteredTodoList] = useState(todoList);
 
-  const [searchParams, setSearchParams] = useSearchParams()
-  
-  const filterText = searchParams.get('filter') ?? ''
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  const filterText = searchParams.get("filter") ?? "";
 
   // useEffect(() => {
   //   const localTodo = localStorage.getItem("todo");
@@ -34,24 +33,29 @@ const ToDoList = () => {
   // }, []);
 
   useEffect(() => {
-    todoList && setFilteredTodoList(todoList?.filter(todo=>todo.title.toLowerCase().includes(filterText.toLowerCase().trim())))
-  },[filterText, todoList])
+    todoList &&
+      setFilteredTodoList(
+        todoList.filter((todo) =>
+          todo.title.toLowerCase().includes(filterText.trim().toLowerCase())
+        )
+      );
+  }, [filterText, todoList]);
 
-  useEffect(() => {
-    todoList && localStorage.setItem("todo", JSON.stringify(todoList));
-  }, [todoList]);
+  // useEffect(() => {
+  //   todoList && localStorage.setItem("todo", JSON.stringify(todoList));
+  // }, [todoList]);
 
-  // const handleCheckCompleted = (id) => {
-  //   setTodoList((prevState) => {
-  //     return prevState.map((todo) =>
-  //       todo.id === id ? { ...todo, completed: !todo.completed } : todo
-  //     );
-  //   });
-  // };
-  // const handleDelete = (id) => {
-  //   setTodoList((prevState) => prevState.filter((todo) => todo.id !== id));
-  //   toast.success('Todo was successfully deleted!');
-  // };
+  const handleCheckCompleted = (id) => {
+    // setTodoList((prevState) => {
+    //   return prevState.map((todo) =>
+    //     todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    //   );
+    // });
+  };
+  const handleDelete = (id) => {
+    // setTodoList((prevState) => prevState.filter((todo) => todo.id !== id));
+    // toast.success('Todo was successfully deleted!');
+  };
   const handleAddTodo = (todo) => {
     // setTodoList((prevState) => {
     //   return [
@@ -63,14 +67,17 @@ const ToDoList = () => {
     //     },
     //   ];
     // });
-    dispatch(createTodo(todo))
+    dispatch(createTodo(todo));
     toast.success("Todo was successfully created!");
   };
 
   return (
     <>
       <h1>My To-Do list</h1>
-      <FormFilterToDo setSearchParams={setSearchParams} filterText={filterText } />
+      <FormFilterToDo
+        setSearchParams={setSearchParams}
+        filterText={filterText}
+      />
       {/* {isDelete && (
           <div className="alert alert-danger" role="alert">
             Todo was successfully deleted!
@@ -88,8 +95,8 @@ const ToDoList = () => {
             <ToDo
               key={todo.id}
               todo={todo}
-              // handleCheckCompleted={handleCheckCompleted}
-              // handleDelete={handleDelete}
+              handleCheckCompleted={handleCheckCompleted}
+              handleDelete={handleDelete}
             />
           ))}
         </ul>
