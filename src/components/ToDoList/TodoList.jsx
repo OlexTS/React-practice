@@ -7,7 +7,11 @@ import ToDo from "../ToDo/Todo";
 // import todo from "../../todo.json";
 import FormToDo from "../FormToDo/FormToDo";
 import FormFilterToDo from "../FormToDo/FormFilterToDo";
-import { createTodo, deleteTodo, checkCompleted } from "../../redux/todo/actions";
+import {
+  createTodo,
+  deleteTodo,
+  checkCompleted,
+} from "../../redux/todo/actions";
 
 /*
   |==============================
@@ -27,12 +31,13 @@ const ToDoList = () => {
 
   useEffect(() => {
     const localTodo = localStorage.getItem("todo");
-    
+
     if (localTodo) {
-    setFilteredTodoList(JSON.parse(localTodo)) ;
+      setFilteredTodoList(JSON.parse(localTodo));
+      
     }
   }, []);
-
+console.log(todoList);
   useEffect(() => {
     todoList &&
       setFilteredTodoList(
@@ -47,11 +52,11 @@ const ToDoList = () => {
   }, [todoList]);
 
   const handleCheckCompleted = (id) => {
-    dispatch(checkCompleted(id))
+    dispatch(checkCompleted(id));
   };
   const handleDelete = (id) => {
-    dispatch(deleteTodo(id))
-    toast.success('Todo was successfully deleted!');
+    dispatch(deleteTodo(id));
+    toast.success("Todo was successfully deleted!");
   };
   const handleAddTodo = (todo) => {
     // setTodoList((prevState) => {
@@ -66,7 +71,8 @@ const ToDoList = () => {
     // });
     dispatch(createTodo(todo));
     toast.success("Todo was successfully created!");
-};
+    
+  };
 
   return (
     <>

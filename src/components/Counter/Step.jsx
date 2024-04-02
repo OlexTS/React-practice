@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
-import { setStep } from "../../redux/counter/actions"
+import { setStep } from "../../redux/counter/counterSlice"
+// import { setStep } from "../../redux/counter/actions"
 
 const Step = () => {
     const dispatch = useDispatch()

@@ -14,4 +14,5 @@ export const createTodo = createAction("CREATETODO", (value) => {
 
 export const deleteTodo = createAction('DELETETODO');
 export const checkCompleted = createAction('CHECKCOMPLETED');
+
 // export const createTodo = todo => ({type: CREATETODO, payload: todo})

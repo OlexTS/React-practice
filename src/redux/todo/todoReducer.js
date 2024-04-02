@@ -1,6 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { todoInitialState } from "./initialState";
-import { createTodo, deleteTodo, checkCompleted } from "./actions";
+import { createTodo, deleteTodo, checkCompleted} from "./actions";
 // import { CREATETODO } from "./types";
 
 export const todoReducer = createReducer(todoInitialState, (builder) => {
@@ -18,7 +18,7 @@ export const todoReducer = createReducer(todoInitialState, (builder) => {
           item.completed = !item.completed;
         }
       }
-    });
+    })
 });
 // export const todoReducer = (state = todoInitialState, action) => {
 //   switch (action.type) {
