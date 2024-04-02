@@ -30,14 +30,14 @@ const ToDoList = () => {
 
   const filterText = searchParams.get("filter") ?? "";
 
-  useEffect(() => {
-    const localTodo = localStorage.getItem("todo");
+  // useEffect(() => {
+  //   const localTodo = localStorage.getItem("todo");
 
-    if (localTodo) {
-      setFilteredTodoList(JSON.parse(localTodo));
+  //   if (localTodo) {
+  //     setFilteredTodoList(JSON.parse(localTodo));
       
-    }
-  }, []);
+  //   }
+  // }, []);
 
   useEffect(() => {
     todoList &&
@@ -48,9 +48,9 @@ const ToDoList = () => {
       );
   }, [filterText, todoList]);
 
-  useEffect(() => {
-    todoList && localStorage.setItem("todo", JSON.stringify(todoList));
-  }, [todoList]);
+  // useEffect(() => {
+  //   todoList && localStorage.setItem("todo", JSON.stringify(todoList));
+  // }, [todoList]);
 
   const handleCheckCompleted = (id) => {
     dispatch(checkCompleted(id));
