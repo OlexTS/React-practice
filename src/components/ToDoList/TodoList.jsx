@@ -7,11 +7,12 @@ import ToDo from "../ToDo/Todo";
 // import todo from "../../todo.json";
 import FormToDo from "../FormToDo/FormToDo";
 import FormFilterToDo from "../FormToDo/FormFilterToDo";
-import {
-  createTodo,
-  deleteTodo,
-  checkCompleted,
-} from "../../redux/todo/actions";
+import { checkCompleted, createTodo, deleteTodo } from "../../redux/todo/todoSlice";
+// import {
+//   createTodo,
+//   deleteTodo,
+//   checkCompleted,
+// } from "../../redux/todo/actions";
 
 /*
   |==============================
@@ -37,7 +38,7 @@ const ToDoList = () => {
       
     }
   }, []);
-console.log(todoList);
+
   useEffect(() => {
     todoList &&
       setFilteredTodoList(
