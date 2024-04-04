@@ -21,14 +21,31 @@ const persistConfig = {
   whitelist: ['todo']
 };
 
+
+
+const customMiddle =(state)=>{
+return (next)=>{
+  return (action)=>{
+    if(typeof action === 'function'){
+      action(state.dispatch)
+      return
+    }
+    console.log(state.getState());
+    return next(action)
+  }
+}
+}
+
 const persistedReducer = persistReducer(persistConfig, reducer);
 export const store = configureStore({
     reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+    middleware: ()=>[customMiddle]
+    // middleware: (getDefaultMiddleware) =>
+    // getDefaultMiddleware({
+    //   serializableCheck: {
+    //     ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    //   },
+    // }),
+
 });
 export const persistor = persistStore(store);
