@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { getNewsThunk } from "../../redux/news/newsReducer";
+import { getNewsThunk } from "../../redux/news/thunk";
+
 
 const Header = ({ showModal }) => {
   const navigate = useNavigate();
