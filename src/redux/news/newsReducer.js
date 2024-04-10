@@ -1,17 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getTopNews } from "../../services/getNews";
 
-export const getNewsThunk = () => {
-  return async (dispatch) => {
-    try {
-      dispatch(newsSlice.actions.fetching());
-      const data = await getTopNews();
-      dispatch(newsSlice.actions.fetchSuccess(data));
-    } catch (error) {
-      dispatch.actions.fetchError(error);
-    }
-  };
-};
+// export const getNewsThunk = () => {
+//   return async (dispatch) => {
+//     try {
+//       dispatch(newsSlice.actions.fetching());
+//       const data = await getTopNews();
+//       dispatch(newsSlice.actions.fetchSuccess(data));
+//     } catch (error) {
+//       dispatch.actions.fetchError(error);
+//     }
+//   };
+// };
+
+export const getNewsThunk = createAsyncThunk("news/getTopNews", async () => {
+  return await getTopNews();
+});
 
 const initialState = {
   news: [],
@@ -22,20 +26,49 @@ const initialState = {
 const newsSlice = createSlice({
   name: "news",
   initialState,
-  reducers: {
-    fetching: (state) => {
-      state.status = "pending";
-    },
-    fetchSuccess: (state, { payload }) => {
-      state.status = "fulfilled";
-      state.news = payload.articles;
-      state.error = "";
-    },
-    fetchError: (state, { payload }) => {
-      state.status = "rejected";
-      state.error = payload;
-    },
+  // reducers: {
+  //   fetching: (state) => {
+  //     state.status = "pending";
+  //   },
+  //   fetchSuccess: (state, { payload }) => {
+  //     state.status = "fulfilled";
+  //     state.news = payload.articles;
+  //     state.error = "";
+  //   },
+  //   fetchError: (state, { payload }) => {
+  //     state.status = "rejected";
+  //     state.error = payload;
+  //   },
+  // },
+  // extraReducers: {
+  //   [getNewsThunk.pending]: (state) => {
+  //     state.status = "pending";
+  //   },
+  //   [getNewsThunk.fulfilled]: (state, { payload }) => {
+  //     state.status = "fulfilled";
+  //     state.news = payload.articles;
+  //     state.error = "";
+  //   },
+  //   [getNewsThunk.rejected]: (state, { payload }) => {
+  //     state.status = "rejected";
+  //     state.error = payload;
+  //   },
+  // },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getNewsThunk.pending, (state) => {
+        state.status = "pending";
+      })
+      .addCase(getNewsThunk.fulfilled, (state, { payload }) => {
+        state.status = "fulfilled";
+        state.news = payload.articles;
+        state.error = "";
+      })
+      .addCase(getNewsThunk.rejected, (state, { payload }) => {
+        state.status = "rejected";
+        state.error = payload;
+      });
   },
 });
 
-export const newsReducer = newsSlice.reducer
+export const newsReducer = newsSlice.reducer;
