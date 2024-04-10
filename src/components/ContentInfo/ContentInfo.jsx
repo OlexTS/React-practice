@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
-import { getNews } from "../../services/getNews";
-
+import { useEffect } from "react";
+// import { getNews } from "../../services/getNews";
+import { useSelector, useDispatch } from "react-redux";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Loader from "../Loader/Loader";
 import ContentNews from "../ContentNews/ContentNews";
-import { useCustomContext } from "../../testContext/Context/Context";
+// import { useCustomContext } from "../../testContext/Context/Context";
+import { getNewsSearchThunk, getNewsThunk } from "../../redux/news/thunk";
 
 /*
   |==============================
@@ -77,66 +78,71 @@ const STATUS = {
   IDLE: "idle",
   PENDING: "pending",
   REJECTED: "rejected",
-  RESOLVED: "resolved",
+  FULFILLED: "fulfilled",
 };
 let page = 1;
 const ContentInfo = ({ searchText }) => {
-  const {news, setNews} = useCustomContext();
-  const [error, setError] = useState("");
-  const [status, setStatus] = useState(STATUS.IDLE);
-
+  const dispatch = useDispatch();
+  const { news, status, error } = useSelector((state) => state.news);
   useEffect(() => {
-  news&&setStatus(STATUS.RESOLVED)
-},[news])
-
+    dispatch(getNewsThunk());
+  }, [dispatch]);
   useEffect(() => {
-    if (searchText) {
-      setStatus(STATUS.PENDING);
-      
-      setTimeout(() => {
-        getNews(searchText)
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.status === "ok") {
-              setNews(data.articles);
-              setStatus(STATUS.RESOLVED);
-            } else {
-              return Promise.reject(data.message);
-            }
-          })
-          .catch((error) => {
-            setError(error);
-            setStatus(STATUS.REJECTED);
-          });
-        
-      }, 3000);
-    }
-  }, [searchText, setNews]);
+    if (!searchText) return;
+    dispatch(getNewsSearchThunk(searchText, page));
+  }, [dispatch, searchText]);
+  //   const {news, setNews} = useCustomContext();
+  //   const [error, setError] = useState("");
+  //   const [status, setStatus] = useState(STATUS.IDLE);
+
+  //   useEffect(() => {
+  //   news&&setStatus(STATUS.RESOLVED)
+  // },[news])
+
+  //   useEffect(() => {
+  //     if (searchText) {
+  //       setStatus(STATUS.PENDING);
+
+  //       setTimeout(() => {
+  //         getNews(searchText)
+  //           .then((response) => response.json())
+  //           .then((data) => {
+  //             if (data.status === "ok") {
+  //               setNews(data.articles);
+  //               setStatus(STATUS.RESOLVED);
+  //             } else {
+  //               return Promise.reject(data.message);
+  //             }
+  //           })
+  //           .catch((error) => {
+  //             setError(error);
+  //             setStatus(STATUS.REJECTED);
+  //           });
+
+  //       }, 3000);
+  //     }
+  //   }, [searchText, setNews]);
 
   const onLoadMore = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     page += 1;
     // setStatus(STATUS.PENDING);
-
-    return getNews(searchText, page)
-      .then((response) => response.json())
-      .then((data) => {
-        setNews(() => [...news, ...data.articles]);
-        setStatus(STATUS.RESOLVED);
-      })
-      .catch((error) => {
-        setError(error);
-        setStatus(STATUS.REJECTED);
-      });
+    return dispatch(getNewsSearchThunk(searchText, page));
+    // return getNews(searchText, page)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setNews(() => [...news, ...data.articles]);
+    //     setStatus(STATUS.RESOLVED);
+    //   })
+    //   .catch((error) => {
+    //     setError(error);
+    //     setStatus(STATUS.REJECTED);
+    //   });
   };
 
   if (status === STATUS.PENDING) {
-    return (
-    
-        <Loader />
-      
-    );
-  } else if (status === STATUS.RESOLVED) {
+    return <Loader />;
+  } else if (status === STATUS.FULFILLED) {
     return <ContentNews news={news} onLoadMore={onLoadMore} />;
   } else if (status === STATUS.REJECTED) {
     return <ErrorMessage>{error}</ErrorMessage>;

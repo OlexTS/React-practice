@@ -1,23 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { getNewsSearchThunk, getNewsThunk } from "./thunk.js";
 import { initialState } from "./initialNewsState";
 
+const defaultStatus = {
+  pending: "pending",
+  fulfilled: "fulfilled",
+  rejected: "rejected",
+};
 
+const thunkAmswerStatus = (status) => customArr.map((el) => el[status]);
 
+const customArr = [getNewsThunk, getNewsSearchThunk];
 
 const handlePending = (state) => {
-        state.status = "pending";
-      };
-      const handleFulfilled = (state, { payload }) => {
-        state.status = "fulfilled";
-        state.news = payload.articles;
-        state.error = "";
-      };
-      const handleRejected = (state, { payload }) => {
-        state.status = "rejected";
-        state.error = payload;
-      }
-
+  state.status = defaultStatus.pending;
+};
+const handleFulfilled = (state, { payload }) => {
+  state.status = defaultStatus.fulfilled;
+  state.news = payload.articles;
+  state.error = "";
+};
+const handleRejected = (state, { payload }) => {
+  state.status = defaultStatus.rejected;
+  state.error = payload;
+};
 
 const newsSlice = createSlice({
   name: "news",
@@ -29,7 +35,10 @@ const newsSlice = createSlice({
       .addCase(getNewsThunk.rejected, handleRejected)
       .addCase(getNewsSearchThunk.pending, handlePending)
       .addCase(getNewsSearchThunk.fulfilled, handleFulfilled)
-      .addCase(getNewsSearchThunk.rejected, handleRejected);
+      .addCase(getNewsSearchThunk.rejected, handleRejected)
+      .addMatcher(isAnyOf(...thunkAmswerStatus(defaultStatus.pending)), handlePending)
+      .addMatcher(isAnyOf(...thunkAmswerStatus((defaultStatus.fulfilled))), handleFulfilled)
+      .addMatcher(isAnyOf(...thunkAmswerStatus(defaultStatus.rejected)), handleRejected);
   },
 });
 
