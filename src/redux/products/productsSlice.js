@@ -13,7 +13,7 @@ const defaultStatus = {
   rejected: "rejected",
 };
 const answerStatus = (type) => {
-  customArr.map((el) => el[type]);
+ return customArr.map((el) => el[type]);
 };
 const handlePending = (state) => {
   state.isLoading = true;
