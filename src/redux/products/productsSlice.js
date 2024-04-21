@@ -6,15 +6,14 @@ import {
   getProductsThunk,
 } from "./thunk";
 
-const customArr = [getProductsThunk, createProductsThunk, deleteProductsThunk];
 const defaultStatus = {
   pending: "pending",
   fulfilled: "fulfilled",
   rejected: "rejected",
 };
-const answerStatus = (type) => {
- return customArr.map((el) => el[type]);
-};
+const customArr = [getProductsThunk, createProductsThunk, deleteProductsThunk];
+const answerStatus = (type) => customArr.map((el) => el[type]);
+;
 const handlePending = (state) => {
   state.isLoading = true;
 };
@@ -48,8 +47,8 @@ const productSlice = createSlice({
       .addCase(createProductsThunk.fulfilled, handleFulfilledCreate)
       .addCase(deleteProductsThunk.fulfilled, handleFulfilledDelete)
       .addMatcher(isAnyOf(...answerStatus(pending)), handlePending)
-      .addMatcher(isAnyOf(...answerStatus(fulfilled)), handleRejected)
-      .addMatcher(isAnyOf(...answerStatus(rejected)), handleFulfilled);
+      .addMatcher(isAnyOf(...answerStatus(fulfilled)), handleFulfilled)
+      .addMatcher(isAnyOf(...answerStatus(rejected)), handleRejected);
   },
 });
 

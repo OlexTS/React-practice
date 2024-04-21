@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getNewsThunk } from "../../redux/news/thunk";
 
-
 const Header = ({ showModal }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -24,7 +23,9 @@ const Header = ({ showModal }) => {
             <NavLink className="nav-link text-white" to="/todo">
               Todo
             </NavLink>
-            <NavLink className="nav-link text-white" to='/products'>Products</NavLink>
+            <NavLink className="nav-link text-white" to="/products">
+              Products
+            </NavLink>
           </div>
         </div>
         <button className="btn btn-outline-success" onClick={showModal}>
@@ -33,7 +34,12 @@ const Header = ({ showModal }) => {
         <button className="btn btn-outline-success" onClick={handleLogin}>
           Login
         </button>
-        <button className="btn btn-outline-success" onClick={()=>{dispatch(getNewsThunk())}}>
+        <button
+          className="btn btn-outline-success"
+          onClick={() => {
+            dispatch(getNewsThunk());
+          }}
+        >
           Thunk
         </button>
       </div>
@@ -41,4 +47,4 @@ const Header = ({ showModal }) => {
   );
 };
 
-export default Header
+export default Header;

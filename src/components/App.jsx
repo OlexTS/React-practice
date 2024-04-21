@@ -24,7 +24,7 @@ const TodoDetails = lazy(() => import("./ToDo/TodoDetails"));
 const TodoPage = lazy(() => import("./pages/TodoPage"));
 const NewsPage = lazy(() => import("./pages/NewsPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
-const ProductsPage = lazy(()=> import('./pages/ProductsPage'))
+const ProductsPage = lazy(() => import("./pages/ProductsPage"));
 
 const App = () => {
   return (
@@ -34,7 +34,7 @@ const App = () => {
         <Route path="news" element={<NewsPage />} />
         <Route path="todo" element={<TodoPage />} />
         <Route path="todo/:id" element={<TodoDetails />} />
-        <Route path="products" element={<ProductsPage/>} />
+        <Route path="products" element={<ProductsPage />} />
       </Route>
       <Route
         path="/login"
