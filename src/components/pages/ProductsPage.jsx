@@ -34,7 +34,7 @@ const ProductsPage = () => {
                     <p className="card-text">{description}</p>
                     <button
                       className="btn btn-danger"
-                      onClick={deleteProductsThunk(id)}
+                      onClick={()=>dispatch(deleteProductsThunk(id))}
                     >
                       Delete
                     </button>
