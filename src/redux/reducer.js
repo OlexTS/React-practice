@@ -5,12 +5,12 @@ import { counterReducer } from "./counter/counterSlice";
 import { todoReducer } from "./todo/todoSlice";
 import { newsReducer } from "./news/newsReducer";
 import { productsReducer } from "./products/productsSlice";
-// import { productsApi } from "./products/productsAPI";
+import { productsApi } from "./products/productsAPI";
 
 export const reducer = combineReducers({
   counter: counterReducer,
   todo: todoReducer,
   news: newsReducer,
   products: productsReducer,
-  // [productsApi.reducerPath]: productsApi.reducer
+  [productsApi.reducerPath]: productsApi.reducer
 });

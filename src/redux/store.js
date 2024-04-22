@@ -11,6 +11,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { reducer } from "./reducer";
+import { productsApi } from "./products/productsAPI";
 
 // store.dispatch({ type: "increment", payload: 1 });
 // console.log(store.getState());
@@ -43,6 +44,7 @@ export const store = configureStore({
     serializableCheck: {
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
     },
-  }),
+  }).concat(productsApi.middleware),
+  // middleware: (getDefaultMiddleware)=>getDefaultMiddleware().concat(productsApi.middleware)
 });
 export const persistor = persistStore(store);

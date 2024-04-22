@@ -4,18 +4,22 @@ import {
   getProductsThunk,
   deleteProductsThunk,
 } from "../../redux/products/thunk";
+import { useDeleteProductsMutation, useGetProductsQuery } from "../../redux/products/productsAPI";
 // import { productsSelector } from "../../redux/products/selectors";
 
 const ProductsPage = () => {
-//   const products = useSelector(productsSelector);
-  const {products, error, isLoading } = useSelector((state) => state.products);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getProductsThunk());
-  }, [dispatch]);
+  const {isLoading, data: products, isError} = useGetProductsQuery();
+  const [deleteProduct, delInfo] = useDeleteProductsMutation()
+  
+  // const products = useSelector(productsSelector);
+  // const {products, error, isLoading } = useSelector((state) => state.products);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(getProductsThunk());
+  // }, [dispatch]);
   return (
     <>
-      {/* {delInfo.isLoading && <h1>Deleting...</h1>} */}
+      {delInfo.isLoading && <h1>Deleting...</h1>}
       {isLoading && (
         <div className="spinner-border" role="status">
           <span className="visually-hidden">Loading...</span>
@@ -34,7 +38,7 @@ const ProductsPage = () => {
                     <p className="card-text">{description}</p>
                     <button
                       className="btn btn-danger"
-                      onClick={()=>dispatch(deleteProductsThunk(id))}
+                      onClick={()=>deleteProduct(id)}
                     >
                       Delete
                     </button>
@@ -46,7 +50,7 @@ const ProductsPage = () => {
         </div>
       )}
 
-      {error && <h2>error</h2>}
+      {isError && <h2>error</h2>}
     </>
   );
 };
