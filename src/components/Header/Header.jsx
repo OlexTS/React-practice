@@ -8,6 +8,9 @@ const Header = ({ showModal }) => {
   const handleLogin = () => {
     navigate("/login");
   };
+  const handleRegister = () => {
+    navigate("/signUp");
+  };
   return (
     <nav className="navbar bg-dark mb-3 navbar-expand-lg">
       <div className="container-fluid">
@@ -33,6 +36,9 @@ const Header = ({ showModal }) => {
         </button>
         <button className="btn btn-outline-success" onClick={handleLogin}>
           Login
+        </button>
+        <button className="btn btn-outline-success" onClick={handleRegister}>
+          Registration
         </button>
         <button
           className="btn btn-outline-success"

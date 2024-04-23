@@ -24,6 +24,7 @@ const TodoDetails = lazy(() => import("./ToDo/TodoDetails"));
 const TodoPage = lazy(() => import("./pages/TodoPage"));
 const NewsPage = lazy(() => import("./pages/NewsPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
+const RegistrationPage = lazy(() => import("./pages/RegistrationPage"));
 const ProductsPage = lazy(() => import("./pages/ProductsPage"));
 
 const App = () => {
@@ -41,6 +42,14 @@ const App = () => {
         element={
           <Suspense>
             <LoginPage />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/signUp"
+        element={
+          <Suspense>
+            <RegistrationPage />
           </Suspense>
         }
       />
