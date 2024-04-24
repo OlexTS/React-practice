@@ -1,11 +1,33 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { signUp } from "../../services/auth-service";
+
+
 
 const RegistrationPage = () => {
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newUser = {
+      name: e.target.elements.name.value,
+      email: e.target.elements.email.value,
+      password: e.target.elements.password.value,
+      avatar: "https://picsum.photos/800",
+    };
+    signUp(newUser)
+      .then(() => {
+        console.log("Create success!");
+        navigate("/login");
+      })
+      .catch((error) => console.log(error));
+  };
   return (
-    <div className='card position-absolute top-50 start-50 translate-middle p-2'
-    style={{ minWidth: '350px' }}>
-        <h1 className='text-center'>SignUp</h1>
-      <form>
+    <div
+      className="card position-absolute top-50 start-50 translate-middle p-2"
+      style={{ minWidth: "350px" }}
+    >
+      <h1 className="text-center">SignUp</h1>
+      <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="exampleInputName1" className="form-label">
             Name
