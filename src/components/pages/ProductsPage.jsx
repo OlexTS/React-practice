@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getProductsThunk,
-  deleteProductsThunk,
-} from "../../redux/products/thunk";
+// import React, { useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import {
+//   getProductsThunk,
+//   deleteProductsThunk,
+// } from "../../redux/products/thunk";
 import { useDeleteProductsMutation, useGetProductsQuery } from "../../redux/products/productsAPI";
 // import { productsSelector } from "../../redux/products/selectors";
 

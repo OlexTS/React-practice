@@ -1,9 +1,16 @@
-import React from "react";
-import { login } from "../../services/auth-service";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+// import { login } from "../../services/auth-service";
 import { loginThunk } from "../../redux/auth/thunk";
 
 const LoginPage = () => {
+  const navigate = useNavigate()
+  const isAuth = useSelector(state=>state.auth.access_token);
+  useEffect(() => {
+    isAuth&&navigate('/')
+  }, [isAuth, navigate])
+  
   const dispatch = useDispatch()
   const handleSubmit = (e) => {
     e.preventDefault();

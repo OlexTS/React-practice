@@ -1,16 +1,30 @@
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getNewsThunk } from "../../redux/news/thunk";
+import { logOut } from "../../redux/auth/authSlice";
+import { delToken } from "../../services/auth-service";
+import { getProfileThunk } from "../../redux/auth/thunk";
 
 const Header = ({ showModal }) => {
+  const { profile, access_token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogin = () => {
     navigate("/login");
   };
+  const handleLogOut = ()=>{
+    dispatch(logOut());
+    delToken()
+  }
   const handleRegister = () => {
     navigate("/signUp");
   };
+
+  useEffect(() => {
+    access_token&&dispatch(getProfileThunk())
+  }, [access_token, dispatch])
+  
   return (
     <nav className="navbar bg-dark mb-3 navbar-expand-lg">
       <div className="container-fluid">
@@ -34,8 +48,8 @@ const Header = ({ showModal }) => {
         <button className="btn btn-outline-success" onClick={showModal}>
           Open Modal
         </button>
-        <button className="btn btn-outline-success" onClick={handleLogin}>
-          Login
+        <button className="btn btn-outline-success" onClick={profile?handleLogOut:handleLogin}>
+          {profile ? "LogOut" : "Login"}
         </button>
         <button className="btn btn-outline-success" onClick={handleRegister}>
           Registration
@@ -45,9 +59,10 @@ const Header = ({ showModal }) => {
           onClick={() => {
             dispatch(getNewsThunk());
           }}
-        >
+          >
           Thunk
         </button>
+          {profile && <div className="text-white">{profile.name}</div>}
       </div>
     </nav>
   );
