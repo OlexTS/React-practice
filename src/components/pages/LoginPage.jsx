@@ -1,25 +1,28 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 // import { login } from "../../services/auth-service";
-import { loginThunk } from "../../redux/auth/thunk";
+import { getProfileThunk, loginThunk } from "../../redux/auth/thunk";
 import { toast } from "react-toastify";
 
 const LoginPage = () => {
-  const navigate = useNavigate()
-  const isAuth = useSelector(state=>state.auth.access_token);
-  useEffect(() => {
-    isAuth&&navigate('/')
-  }, [isAuth, navigate])
-  
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  // const isAuth = useSelector((state) => state.auth.access_token);
+  // useEffect(() => {
+  //   isAuth && navigate("/");
+  // }, [isAuth, navigate]);
+
+  const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
     const user = {
       email: e.target.elements.email.value,
       password: e.target.elements.password.value,
     };
-    dispatch(loginThunk(user)).unwrap().then(()=>navigate('/')).catch(()=>toast.error('Something went wrong'))
+    dispatch(loginThunk(user))
+      .unwrap()
+      .then(() => {dispatch(getProfileThunk());navigate("/")})
+      .catch(() => toast.error("Something went wrong"));
   };
   return (
     <div
@@ -54,7 +57,9 @@ const LoginPage = () => {
             id="exampleInputPassword1"
           />
         </div>
-
+        <div>
+          <Link to="/signUp">signUp</Link>
+        </div>
         <button type="submit" className="btn btn-primary">
           Submit
         </button>

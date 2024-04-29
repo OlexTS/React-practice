@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getNewsThunk } from "../../redux/news/thunk";
 import { logOut } from "../../redux/auth/authSlice";
 import { delToken } from "../../services/auth-service";
-import { getProfileThunk } from "../../redux/auth/thunk";
+// import { getProfileThunk } from "../../redux/auth/thunk";
 
 const Header = ({ showModal }) => {
   const { profile, access_token } = useSelector((state) => state.auth);
@@ -21,9 +21,9 @@ const Header = ({ showModal }) => {
     navigate("/signUp");
   };
 
-  useEffect(() => {
-    access_token&&dispatch(getProfileThunk())
-  }, [access_token, dispatch])
+  // useEffect(() => {
+  //   access_token&&dispatch(getProfileThunk())
+  // }, [access_token, dispatch])
   
   return (
     <nav className="navbar bg-dark mb-3 navbar-expand-lg">
