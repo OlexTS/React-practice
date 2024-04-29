@@ -1,7 +1,6 @@
 import React, { Suspense, useState } from "react";
 import { nanoid } from "nanoid";
 import { Outlet } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import Header from "../Header/Header";
 import Modal from "../Modal/Modal";
 import FormLogin from "../FormLogin/FormLogin";
@@ -22,7 +21,7 @@ const Layout = () => {
   };
   return (
     <div className="container">
-      <ToastContainer position="top-right" autoClose={2000} />
+     
       <Header showModal={showModal} />
       <Suspense fallback={<h1>Loading...</h1>}>
         <Outlet />

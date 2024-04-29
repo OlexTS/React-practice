@@ -34,7 +34,7 @@ const Header = ({ showModal }) => {
             <NavLink className="nav-link text-white" aria-current="page" to="/">
               Home
             </NavLink>
-            <NavLink className="nav-link text-white" to="/news">
+            {access_token&&<><NavLink className="nav-link text-white" to="/news">
               News
             </NavLink>
             <NavLink className="nav-link text-white" to="/todo">
@@ -42,7 +42,7 @@ const Header = ({ showModal }) => {
             </NavLink>
             <NavLink className="nav-link text-white" to="/products">
               Products
-            </NavLink>
+            </NavLink></>}
           </div>
         </div>
         <button className="btn btn-outline-success" onClick={showModal}>

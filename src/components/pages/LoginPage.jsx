@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import { login } from "../../services/auth-service";
 import { loginThunk } from "../../redux/auth/thunk";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const navigate = useNavigate()
@@ -18,7 +19,7 @@ const LoginPage = () => {
       email: e.target.elements.email.value,
       password: e.target.elements.password.value,
     };
-    dispatch(loginThunk(user))
+    dispatch(loginThunk(user)).unwrap().then(()=>navigate('/')).catch(()=>toast.error('Something went wrong'))
   };
   return (
     <div

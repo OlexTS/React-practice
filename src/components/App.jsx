@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
+import { ToastContainer } from "react-toastify";
 import HomePage from "./pages/HomePage";
 // import NewsPage from "./pages/NewsPage";
 // import TodoPage from "./pages/TodoPage";
@@ -28,7 +29,8 @@ const RegistrationPage = lazy(() => import("./pages/RegistrationPage"));
 const ProductsPage = lazy(() => import("./pages/ProductsPage"));
 
 const App = () => {
-  return (
+  return (<>
+   <ToastContainer position="top-right" autoClose={2000} />
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
@@ -53,7 +55,7 @@ const App = () => {
           </Suspense>
         }
       />
-    </Routes>
+    </Routes></>
   );
 };
 
