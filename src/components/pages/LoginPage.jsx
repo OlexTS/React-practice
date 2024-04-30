@@ -21,7 +21,10 @@ const LoginPage = () => {
     };
     dispatch(loginThunk(user))
       .unwrap()
-      .then(() => {dispatch(getProfileThunk());navigate("/")})
+      .then(() => {
+        dispatch(getProfileThunk());
+        navigate("/");
+      })
       .catch(() => toast.error("Something went wrong"));
   };
   return (

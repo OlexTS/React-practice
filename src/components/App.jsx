@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 // import NewsPage from "./pages/NewsPage";
 // import TodoPage from "./pages/TodoPage";
 import Layout from "./Layout/Layout";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
 // import LoginPage from "./pages/LoginPage";
 // import TodoDetails from "./ToDo/TodoDetails";
 // import { useState } from "react";
@@ -35,9 +36,9 @@ const App = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="news" element={<NewsPage />} />
-        <Route path="todo" element={<TodoPage />} />
-        <Route path="todo/:id" element={<TodoDetails />} />
-        <Route path="products" element={<ProductsPage />} />
+        <Route path="todo" element={<PrivateRoute><TodoPage /></PrivateRoute>} />
+        <Route path="todo/:id" element={<PrivateRoute><TodoDetails /></PrivateRoute>} />
+        <Route path="products" element={<PrivateRoute><ProductsPage /></PrivateRoute>} />
       </Route>
       <Route
         path="/login"
