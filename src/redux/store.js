@@ -19,7 +19,7 @@ import { productsApi } from "./products/productsAPI";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["todo"],
+  whitelist: ["todo", 'auth'],
 };
 
 // const customMiddle = (state) => {

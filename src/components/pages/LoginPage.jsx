@@ -1,12 +1,12 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { useDispatch } from "react-redux";
 // import { login } from "../../services/auth-service";
-import { getProfileThunk, loginThunk } from "../../redux/auth/thunk";
+import { loginThunk } from "../../redux/auth/thunk";
 import { toast } from "react-toastify";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const isAuth = useSelector((state) => state.auth.access_token);
   // useEffect(() => {
   //   isAuth && navigate("/");
@@ -21,10 +21,10 @@ const LoginPage = () => {
     };
     dispatch(loginThunk(user))
       .unwrap()
-      .then(() => {
-        dispatch(getProfileThunk());
-        navigate("/");
-      })
+      // .then(() => {
+      //   dispatch(getProfileThunk());
+      //   // navigate("/");
+      // })
       .catch(() => toast.error("Something went wrong"));
   };
   return (
