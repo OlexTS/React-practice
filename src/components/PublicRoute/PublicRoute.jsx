@@ -1,10 +1,11 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { Navigate } from 'react-router-dom'
+import React from "react";
+import { useSelector } from "react-redux";
+import { Navigate, useLocation } from "react-router-dom";
 
-const PublicRoute = ({children}) => {
-    const isAuth = useSelector(state=>state.auth.access_token)
-  return !isAuth ? children : <Navigate to='/'/>
-}
+const PublicRoute = ({ children }) => {
+  const isAuth = useSelector((state) => state.auth.access_token);
+  const { state } = useLocation();
+  return !isAuth ? children : <Navigate to={state ? state : "/"} />;
+};
 
-export default PublicRoute
+export default PublicRoute;

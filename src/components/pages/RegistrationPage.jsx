@@ -1,11 +1,15 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link} from "react-router-dom";
 import { signUp } from "../../services/auth-service";
+import { toast } from "react-toastify";
+import { loginThunk } from "../../redux/auth/thunk";
 
 
 
 const RegistrationPage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const dispatch = useDispatch()
   const handleSubmit = (e) => {
     e.preventDefault();
     const newUser = {
@@ -16,8 +20,10 @@ const RegistrationPage = () => {
     };
     signUp(newUser)
       .then(() => {
-        console.log("Create success!");
-        navigate("/login");
+        toast.success('Registration success');
+        dispatch(loginThunk({email: e.target.elements.email.value,
+          password: e.target.elements.password.value,}))
+        // navigate("/login");
       })
       .catch((error) => console.log(error));
   };
